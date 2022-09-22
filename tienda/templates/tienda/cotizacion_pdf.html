@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizacion | Mallon</title>
+</head>
+<style>
+    @page {
+        size: letter portrait;
+
+        @frame content_frame {
+            left: 50pt;
+            width: 512pt;
+            top: 50pt;
+            height: 692pt;
+            /* -pdf-frame-border: 0; */
+            /* for debugging the layout */
+        }
+    }
+
+    .center {
+        text-align: center !important;
+
+    }
+
+    .right {
+        text-align: right !important;
+    }
+
+    .left {
+        text-align: left !important;
+    }
+
+    .img {
+        height: auto;
+        width: 200px;
+
+    }
+
+    table.tabla {
+
+        width: 100%;
+        background-color: #FFFFFF;
+        border-collapse: collapse;
+        border-width: 2px;
+        border-color: #7ea8f8;
+        border-style: solid;
+        color: #000000;
+    }
+
+    table.tabla td,
+    table.tabla th {
+        border-width: 2px;
+        border-color: #3b3b3b;
+        border-style: solid;
+        padding: 5px;
+        text-align: center;
+    }
+
+    table.tabla thead {
+
+        background-color: #959596;
+    }
+
+
+   
+</style>
+
+<body>
+    <div class="center">
+        <img class="img" src="{% static 'base/img/logo-mallon_rojo.png' %} " alt="Mallon.com">
+        <h5>Mallon Importaciones</h5>
+    </div>
+
+    <div class="center">
+        <h3>COTIZACIÓN.</h3>
+    </div>
+    <div>
+        <div>
+            <span>Cliente: {{cliente.razon_social}}</span> <br />
+            <span>Nit: {{cliente.nit}}</span>
+            <span>Fecha: {{cliente.fecha}}</span>
+
+
+        </div>
+        <div>
+            <p> En atencion a su solicitud, nos permitimos cotizar los siguentes articulos: </p>
+        </div>
+        <div>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">U.M.</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Precio Unitario</th>
+                        <th scope="col">Sub Total</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in request.session.carrito.items %}
+                    <tr>
+                        <!-- <th>item.num</th> -->
+                        <td>{{value.cantidad}}</td>
+                        <td>{{value.unidad_medida}}</td>
+                        <td class="left">value.nombre</td>
+                        <td>{{value.precio}}</td>
+                        <td>{{value.acumulado}}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="total" colspan="3"></td>
+                        <th class="right" scope="ROW" >TOTAL:</th>
+                        <td class="center">{{total_carrito}} Bs.</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+
+
+        <p>
+            La presente cotizacion tiene una valides de 10 dias caalendarios.
+        </p>
+        <p>
+            Mallon.com
+        </p>
+        <h5>Whatsapp: 76543332</h5>
+
+    </div>
+
+</body>
+
+</html>

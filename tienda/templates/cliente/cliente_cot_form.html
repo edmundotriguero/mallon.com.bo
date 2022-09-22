@@ -1,0 +1,142 @@
+{% extends 'bases/base.html' %}
+
+{% load static %}
+
+{% block btn_carrito%}
+<li class="nav-item px-3">
+  <a class="nav-link cl-white" aria-current="page" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+    aria-controls="offcanvasRight">CARRITO</a>
+</li>
+{% endblock %}
+
+
+{% block page_content %}
+
+
+<a class="btn-whatsapp" href="https://wa.me/59173609014?text=Me%20interesa%20Mallon.com.bo" target="_blank"> <i
+    class="fa-brands fa-whatsapp"></i> </a>
+
+    <div class=" row container-fluid">
+      <div class="py-2">
+    
+      </div>
+    </div>
+
+<div class="container">
+  <div class="row content-header">
+<p> Una vez llene el formulario descargara la cotizacion solicitada. Gracias por su preferencia. </p>
+  </div>
+</div>
+
+
+<div class=" row container-fluid">
+  <div class="py-2">
+
+  </div>
+</div>
+
+<div class="container  ">
+  <div class="row row align-items-center ">
+    <div class="col-8 align-self-center ">
+      <!-- <div class="content-wrapper "> -->
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+
+
+
+        <form method="POST" class="form-group" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="col-xl-12 col-md-12 mb-12">
+
+           
+
+              <div class="card border-left-primary shadow h-100 py-2">
+                
+
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs  font-weight-bold text-dark text-uppercase mb-1">
+                       DATOS PARA LA COTIZACION
+                      </div>
+                      <small class="text-danger">
+                        {% if form.errors %}
+                        {% for field in form %}
+                        {% if field.errors %}
+                        {% for error in field.errors %}
+                        {{ error|escape }}
+                        {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if form.non_field_errors%}
+                        {% for error in form.non_field_errors %}
+                        {{ error|escape }}
+                        {% endfor %}
+                        {% endif %}
+                        {% endif %}
+                      </small>
+                      <div class="dropdown-divider"></div>
+
+
+
+                      {{form.as_p}}
+
+                      <div class="dropdown-divider"></div>
+                      <div class="form-group row text-center">
+                        <div class="col-sm-12">
+                          {% comment %} <a href="{% url 'rondas:rondas_list' %}" class="btn btn-danger"><span
+                              class="fa fa-undo"> Cancelar</span></a> {% endcomment %}
+                          <button type="submit" class="btn btn-success"><span class="fa fa-save"></span>
+                            Descargar cotización</button>
+                        </div>
+                      </div>
+                      <!-- <button type="button" id="sacar_tiempo">sacr</button> -->
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+
+
+
+
+
+
+
+
+
+      </div>
+      <!-- </div> -->
+    </div>
+   
+
+  </div>
+
+
+
+
+</div>
+
+<!-- Inicio Espacio en blanco -->
+<div class=" row container-fluid">
+  <div class="py-5">
+
+  </div>
+</div>
+
+<!-- fin Espacio en blanco -->
+
+
+{% endblock %}
+
+{% block js_page %}
+<script type="text/javascript">
+ setTimeout( function() { window.location.href = "http://127.0.0.1:8000/"; }, 20000 );
+</script>
+
+{% endblock %}
+

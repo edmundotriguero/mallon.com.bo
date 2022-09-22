@@ -1,0 +1,68 @@
+{% extends 'bases/base.html' %}
+
+{% load static %}
+
+{% block btn_carrito%}
+<li class="nav-item px-3">
+  <a class="nav-link cl-white" aria-current="page" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+    aria-controls="offcanvasRight">CARRITO</a>
+</li>
+{% endblock %}
+
+
+{% block page_content %}
+
+
+<a class="btn-whatsapp" href="https://wa.me/59173609014?text=Me%20interesa%20Mallon.com.bo" target="_blank"> <i
+    class="fa-brands fa-whatsapp"></i> </a>
+
+
+
+
+<!-- Inicio Espacio en blanco -->
+<div class=" row container-fluid">
+  <div class="py-5">
+
+  </div>
+</div>
+
+<!-- fin Espacio en blanco -->
+
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      Su pedido fue realizado con exito. En un momento un agente de ventas se contactara con usted para terminar con el proceso de compra. tambien le llegara un correo a su buson para que pueda crear una cuenta en nuestra plataforma donde tendra acceso a los pedidos y estados en el que se encuentra. 
+      <br> Gracias por su preferencia. 
+    </div>
+  </div>
+</div>
+
+<br>
+
+
+<!-- Inicio Espacio en blanco -->
+<div class=" row container-fluid">
+  <div class="py-5">
+
+  </div>
+</div>
+
+
+
+
+
+<!-- Panel derecho CArrito  -->
+
+
+
+
+{% endblock %}
+
+
+{% block js_page %}
+<script type="text/javascript">
+ setTimeout( function() { window.location.href = "http://127.0.0.1:8000/"; }, 10000 );
+</script>
+
+{% endblock %}

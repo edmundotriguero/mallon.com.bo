@@ -1,0 +1,136 @@
+{% extends 'bases/apanel.html' %}
+
+{% block page_content_base %}
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper ">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    
+        
+
+    <form method="POST" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="col-xl-12 col-md-12 mb-12">
+    
+            {% if obj %}
+            <div class="card border-left-warning shadow h-100 py-2">
+                {% else %}
+    
+                <div class="card border-left-primary shadow h-100 py-2">
+                    {% endif %}
+    
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {% if obj %} Editar {% else %} Nuevo {% endif %} registro de Categoria
+                                </div>
+                                <small class="text-danger">
+                                    {% if form.errors %}
+                                    {% for field in form %}
+                                    {% if field.errors %}
+                                    {% for error in field.errors %}
+                                    {{ error|escape }}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+    
+                                    {% if form.non_field_errors%}
+                                    {% for error in form.non_field_errors %}
+                                    {{ error|escape }}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endif %}
+                                </small>
+                                <div class="dropdown-divider"></div>
+                                
+    
+    
+                                <div class="form-group row">
+                                    <label for="id_nombre" class="col-sm-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.nombre}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_descripcion" class="col-sm-2 col-form-label">Descripcion</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.descripcion}}
+                                    </div>
+                                </div>
+
+                            
+
+                                
+                                
+                             
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Estado</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="estado" class="form-check-input" {% if obj.estado == True %}
+                                                checked {% endif %} id="id_estado">
+                                            <label class="form-check-label" for="id_estado">
+                                                Marcar estado.
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+    
+    
+    
+    
+    
+                                <!-- {{form.as_p}} -->
+    
+                                <div class="dropdown-divider"></div>
+                                <div class="form-group row text-center">
+                                    <div class="col-sm-12">
+                                        {% comment %} <a href="{% url 'rondas:rondas_list' %}" class="btn btn-danger"><span
+                                                class="fa fa-undo"> Cancelar</span></a> {% endcomment %}
+                                        <button type="submit" class="btn btn-success"><span class="fa fa-save"></span>
+                                            Guardar</button>
+                                    </div>
+                                </div>
+                                <!-- <button type="button" id="sacar_tiempo">sacr</button> -->
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+
+
+
+
+   
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+{% block js_page %}
+
+
+{% endblock %}

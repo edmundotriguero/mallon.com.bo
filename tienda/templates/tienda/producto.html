@@ -1,0 +1,111 @@
+{% extends 'bases/base.html' %}
+
+{% load static %}
+
+{% block btn_carrito%}
+<li class="nav-item px-3">
+  <a class="nav-link cl-white" aria-current="page" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+    aria-controls="offcanvasRight">CARRITO</a>
+</li>
+{% endblock %}
+
+
+{% block page_content %}
+
+
+<a class="btn-whatsapp" href="https://wa.me/59173609014?text=Me%20interesa%20Mallon.com.bo" target="_blank"> <i
+    class="fa-brands fa-whatsapp"></i> </a>
+
+
+
+
+<!-- Inicio Espacio en blanco -->
+<div class=" row container-fluid">
+  <div class="py-5">
+
+  </div>
+</div>
+
+<!-- fin Espacio en blanco -->
+
+
+<div class="container">
+  <div class="card" style="border: 0; margin: 0;">
+    <div class="card-body">
+      <div class="row  ">
+
+
+        <div class="col-12 col-sm-6 text-center">
+
+          <img src="/{{prod.img}}" alt="">
+
+          <!-- <img src="{% static prod.img %}" alt=""> -->
+        </div>
+        <div class="col-12 col-sm-6">
+
+          <h2 class=" col-12 text-center">{{prod.nombre}} </h2> <br />
+
+          {% if prod.flag_color %}
+
+          <div class="row">
+
+
+            <p>
+              Colores disponibles:
+              {%for i in colores %}
+
+              <span class="badge " style="background-color: {{i}}; color: {{i}};">.</span>
+
+              {% endfor %}
+            </p>
+          </div>
+
+
+
+          {% endif %}
+
+
+          <p class="col-12">{{prod.descripcion}}</p>
+
+          {% if prod.flag_precio %}
+
+          <h4>Precio: {{prod.precio}}</h3>
+<div class="row">
+    
+    <a href="{% url 'ecommerce:Add' prod.id %}" class="btn btn-outline-warning">Añadir al carrito</a>
+</div>
+
+
+            {% else %}
+
+            <h4>Desde: {{prod.p_inicial}} hasta: {{prod.p_final}}</h3>
+
+              {% endif %}
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<br>
+<!-- Inicio Espacio en blanco -->
+<div class=" row container-fluid">
+  <div class="py-5">
+
+  </div>
+</div>
+
+<!-- Panel derecho CArrito  -->
+
+
+{% endblock %}
+
+
+{% block js_page %}
+
+{% endblock %}

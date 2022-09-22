@@ -1,0 +1,107 @@
+{% extends 'bases/apanel.html' %}
+
+{% load static %}
+
+{% block page_content_base %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper ">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    {% comment %} <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">SLIDERS LIST NAME </h1>
+        </div><!-- /.col -->
+        
+
+
+
+
+
+
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid --> {% endcomment %}
+
+    <div class="card">
+      <div class="card-header">
+          <h3 class="card-title">Listado de Categorias </h3>
+         
+          <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                  title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
+                  title="Remove">
+                  <i class="fas fa-times"></i></button>
+          </div>
+          <div class="card-tools ml-2 mr-2 ">
+             
+              <a href="{% url 'ecommerce:categoria_new' %}" class="btn btn-success btn-sm" > Nuevo <i class="fas fa-plus-circle fa-lg"></i></a> 
+                  
+          </div>
+      </div>
+      <div class="card-body">
+  
+          {% if not obj %}
+          <div class="alert alert-info">No hay registros que mostrar</div>
+          {% else %}
+          <div class="table-responsive-sm">
+  
+              <table class="table table-sm table-bordered table-hover">
+                  <thead>
+                      <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Descripción</th>
+                         
+                          <th scope="col">Estado</th>
+                          <th class="all">Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for item in obj %}
+                      <tr>
+                          <td>{{ item.nombre }}</th>
+                          <td>{{ item.descripcion }}</td>
+                         
+                         
+                          <td>{{ item.estado }}</td>
+                          <td>
+                            <a href="{% url 'ecommerce:categoria_edit' item.id %}"
+                              class="btn btn-sm btn-outline-warning btn-circle" role="button"><i
+                                  class="far fa-edit"></i></a>  
+                          <button class="btn btn-sm btn-outline-danger btn-circle"
+                              onclick="return abrir_modal('{% url 'ecommerce:categoria_disabled' item.id %}')"><i
+                                  class="far fa-trash-alt"></i></button> 
+                          </td>
+                      </tr>
+                      {% endfor%}
+  
+                  </tbody>
+              </table>
+          </div>
+  
+          {% endif %}
+  
+      </div>
+      <!-- /.card-body -->
+      <!-- <div class="card-footer">
+          Footer
+      </div> -->
+      <!-- /.card-footer-->
+  </div>
+  <!-- /.card -->
+
+
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block js_page %}
+
+
+{% endblock %}

@@ -1,0 +1,303 @@
+{% extends 'bases/apanel.html' %}
+
+{% block page_content_base %}
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper ">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    
+        
+
+    <form method="POST" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="col-xl-12 col-md-12 mb-12">
+    
+            {% if obj %}
+            <div class="card border-left-warning shadow h-100 py-2">
+                {% else %}
+    
+                <div class="card border-left-primary shadow h-100 py-2">
+                    {% endif %}
+    
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {% if obj %} Editar {% else %} Nuevo {% endif %} registro de Producto
+                                </div>
+                                <small class="text-danger">
+                                    {% if form.errors %}
+                                    {% for field in form %}
+                                    {% if field.errors %}
+                                    {% for error in field.errors %}
+                                    {{ error|escape }}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+    
+                                    {% if form.non_field_errors%}
+                                    {% for error in form.non_field_errors %}
+                                    {{ error|escape }}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endif %}
+                                </small>
+                                <div class="dropdown-divider"></div>
+                                
+    
+    
+                                <div class="form-group row">
+                                    <label for="id_nombre" class="col-sm-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.nombre}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_descripcion" class="col-sm-2 col-form-label">Descripcion</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.descripcion}}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Habilitar precio</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="flag_precio" class="form-check-input" {% if obj.flag_precio == True %}
+                                                checked {% endif %} id="id_flag_precio">
+                                            <label class="form-check-label" for="id_flag_precio">
+                                                Marcar .
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                             
+
+
+                                <div class="form-group row">
+                                    <label for="id_precio" class="col-sm-2 col-form-label">Precio</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.precio}}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="id_p_inicial" class="col-sm-2 col-form-label">Rango inicial</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.p_inicial}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_p_final" class="col-sm-2 col-form-label">Rango Final</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.p_final}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_img" class="col-sm-2 col-form-label">Imagen Producto</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.img}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_categoria" class="col-sm-2 col-form-label">Categoria</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.categoria}}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Sub categoria</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="flag_subcategoria" class="form-check-input" {% if obj.flag_subcategoria == True %}
+                                                checked {% endif %} id="id_flag_subcategoria">
+                                            <label class="form-check-label" for="id_flag_subcategoria">
+                                                Marcar .
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="id_sub_cat" class="col-sm-2 col-form-label">Sub categoria</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.sub_cat}}
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Marca</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="flag_marca" class="form-check-input" {% if obj.flag_marca == True %}
+                                                checked {% endif %} id="id_flag_marca">
+                                            <label class="form-check-label" for="id_flag_marca">
+                                                Marcar .
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="id_brand" class="col-sm-2 col-form-label">Marca</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.brand}}
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Color</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="flag_color" class="form-check-input" {% if obj.flag_color == True %}
+                                                checked {% endif %} id="id_flag_color">
+                                            <label class="form-check-label" for="id_flag_color">
+                                                Marcar .
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_col" class="col-sm-2 col-form-label">Color</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.col}}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Unidad Medida</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="flag_unidadmedida" class="form-check-input" {% if obj.flag_unidadmedida == True %}
+                                                checked {% endif %} id="id_flag_unidadmedida">
+                                            <label class="form-check-label" for="id_flag_unidadmedida">
+                                                Marcar .
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="id_col" class="col-sm-2 col-form-label">Unidad de Medida</label>
+                                    <div class="col-sm-10">
+                                        <!-- <select name="category" id="id_category" required class="form-control">
+                                            <option value="" selected>---------</option>
+                                            
+                                        </select> -->
+                                        {{ form.unidad_medida}}
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                             
+                                <div class="form-group row">
+                                    <div class="col-sm-2">Estado</div>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="estado" class="form-check-input" {% if obj.estado == True %}
+                                                checked {% endif %} id="id_estado">
+                                            <label class="form-check-label" for="id_estado">
+                                                Marcar estado.
+                                            </label>
+                                        </div>
+    
+                                    </div>
+                                </div>
+    
+    
+    
+    
+    
+                                <!-- {{form.as_p}} -->
+    
+                                <div class="dropdown-divider"></div>
+                                <div class="form-group row text-center">
+                                    <div class="col-sm-12">
+                                        {% comment %} <a href="{% url 'rondas:rondas_list' %}" class="btn btn-danger"><span
+                                                class="fa fa-undo"> Cancelar</span></a> {% endcomment %}
+                                        <button type="submit" class="btn btn-success"><span class="fa fa-save"></span>
+                                            Guardar</button>
+                                    </div>
+                                </div>
+                                <!-- <button type="button" id="sacar_tiempo">sacr</button> -->
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+
+
+
+
+   
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+{% block js_page %}
+
+
+{% endblock %}
