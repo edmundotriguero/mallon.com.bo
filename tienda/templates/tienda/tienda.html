@@ -3,9 +3,12 @@
 {% load static %}
 
 {% block btn_carrito%}
-<li class="nav-item px-3">
+<li class="nav-item ">
   <a class="nav-link cl-white" aria-current="page" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
     aria-controls="offcanvasRight">CARRITO</a>
+</li>
+<li class="nav-item ">
+  <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}">LOGIN</a>
 </li>
 {% endblock %}
 

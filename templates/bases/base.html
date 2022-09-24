@@ -1,5 +1,5 @@
 {% load static %}
- 
+
 
 <!doctype html>
 <html lang="es">
@@ -24,14 +24,14 @@
   <link href="{% static 'admin/fontawesome/css/all.css' %}" rel="stylesheet">
 
   {% comment %} fuentes de google {% endcomment %}
-  <link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600&display=swap" rel="stylesheet">
- {% comment %} fin  fuentes de google {% endcomment %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600&display=swap" rel="stylesheet">
+  {% comment %} fin fuentes de google {% endcomment %}
   <title>Mallon Importaciones</title>
 </head>
 
-<body style="font-family: 'Poppins', sans-serif; background-color: #ffffff;" >
+<body style="font-family: 'Poppins', sans-serif; background-color: #ffffff;">
 
 
   <div class="container-fluid p-0">
@@ -40,12 +40,12 @@
     <!-- <nav class="navbar navbar-expand-md navbar-light bg-light " style="background-color: #B42022;"> -->
     <div class="container-fluid m-0 p-0 ">
 
-      <nav class="navbar navbar-expand-md navbar-dark m-0 p-0" style="background-color: #B42022;">
+      <nav class="navbar navbar-expand-lg navbar-dark m-0 p-0" style="background-color: #B42022;">
         <div class="container-fluid m-0 p-0">
 
-          <!-- <div class="container"> --> 
+          <!-- <div class="container"> -->
           <a class="navbar-brand ms-5 py-3 px-5" href="#">
-            <img src="{% static 'base/img/logo.png' %}  " alt="" style="width: 20vh;">
+            <img src="{% static 'base/img/logo.png' %}  " alt="" style="width: 15vh;">
           </a>
           <!-- </div> -->
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -53,29 +53,46 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <div class=" collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-color-menu">
-              <li class="nav-item px-3">
+              <li class="nav-item ">
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'web:index' %}">INICIO</a>
               </li>
-              <li class="nav-item px-3">
+              <li class="nav-item ">
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'web:nosotros' %}">NOSOTROS</a>
               </li>
-              <li class="nav-item px-3">
+              <li class="nav-item ">
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'tienda:tienda' %}">TIENDA VIRTUAL</a>
               </li>
-              <li class="nav-item px-3">
+              <li class="nav-item ">
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'web:info' %}">MAYOR INFORMACION</a>
               </li>
               {% block btn_carrito%}
 
               {% endblock %}
 
+              {% if request.user.is_authenticated %}
+              <li class="nav-item ">
+                <a class="nav-link cl-white" aria-current="page" href="#">{{request.user.username}}</a>
+              </li>
 
+              <li class="nav-item ">
+                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:logout' %}">CERRAR SESION</a>
+              </li>
+
+
+              {% else %}
+
+              <li class="nav-item ">
+                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}">INICIAR SESSION</a>
+              </li>
+
+              {% endif %}
             </ul>
 
           </div>
-          {% comment %} <img class="m-0 p-0 d-none  d-lg-block d-xxl-block " src="img/lineas.png" alt="" height="150"> {% endcomment %}
+          {% comment %} <img class="m-0 p-0 d-none  d-lg-block d-xxl-block " src="img/lineas.png" alt="" height="150">
+          {% endcomment %}
         </div>
       </nav>
     </div>
@@ -88,23 +105,23 @@
 
   </div>
 
- 
-
- 
 
 
 
- 
+
+
+
+
 
   <!-- fin Espacio en blanco -->
 
- <!-- Main content -->
- {% block page_content%}
+  <!-- Main content -->
+  {% block page_content%}
 
- {% endblock %}
+  {% endblock %}
 
 
- 
+
 
   <!-- fin Espacio en blanco -->
 
@@ -197,7 +214,7 @@
     </div>
     <!-- Copyright -->
 
-    
+
 
   </footer>
 

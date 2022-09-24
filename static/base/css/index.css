@@ -11,8 +11,10 @@
 
 .cl-white {
     color: white !important;
-    font-size: 1.5vw;
-    margin: 0.1vw;
+    font-size: 1.7vh !important;
+    margin: 0.1em;
+    margin-left: 1em;
+    
 }
 
 .cl-white:hover {
