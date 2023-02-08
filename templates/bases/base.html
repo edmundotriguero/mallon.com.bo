@@ -67,9 +67,7 @@
               <li class="nav-item ">
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'web:info' %}">MAYOR INFORMACION</a>
               </li>
-              {% block btn_carrito%}
-
-              {% endblock %}
+            
 
               {% if request.user.is_authenticated %}
               <li class="nav-item ">
@@ -87,7 +85,17 @@
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}">INICIAR SESSION</a>
               </li>
 
-              {% endif %}
+              {% endif %} 
+              
+              {% block btn_carrito%}
+
+              
+              <li class="nav-item ">
+                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}"><i class="fa-solid fa-cart-shopping fa-xl"></i></a>
+              </li>
+
+
+              {% endblock %}
             </ul>
 
           </div>

@@ -27,6 +27,9 @@ urlpatterns = [
     path('apanel/', include(('apanel.urls', 'apanel'), namespace='apanel')),
     path('tienda/', include(('tienda.urls', 'tienda'), namespace='tienda')),
     path('ecommerce/', include(('ecommerce.urls', 'ecommerce'), namespace='ecommerce')),
-
+    path('perfil/', include(('perfil.urls', 'perfil'), namespace='perfil')),
     path('admin_user/', admin.site.urls),
+
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

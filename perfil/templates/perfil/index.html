@@ -1,0 +1,33 @@
+{% extends 'bases/base_profile.html' %}
+
+{% load static %}
+
+{% block page_content_base %}
+
+
+<div class="content-wrapper ">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+
+    <div class="card">
+
+      <div class="card-body">
+
+      <p>Bien venido <span class="font-weight-bold" >{{request.user}}</span> aquí podrá revisar sus perdidos y sus cotizaciones y podrá contactara con el Área de Ventas.  </p>
+
+      </div>
+      <!-- /.card-body -->
+      <!-- <div class="card-footer">
+          Footer
+      </div> -->
+      <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+
+
+
+  </div>
+</div>
+
+{% endblock %}
