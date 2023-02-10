@@ -40,7 +40,7 @@ class SinPrivilegios(LoginRequiredMixin, PermissionRequiredMixin):
         return HttpResponseRedirect(reverse_lazy(self.login_url))
 
 
-
+ 
 class HomesinPrivilegios(generic.TemplateView):
     template_name="bases/error_400.html"
 

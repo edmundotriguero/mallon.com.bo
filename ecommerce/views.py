@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, \
     PermissionRequiredMixin
 from django.http import HttpResponse
-from ecommerce.models import Categoria,SubCategoria,Marca,Color,Producto, Ciudad
+from ecommerce.models import Categoria,SubCategoria,Marca,Color,Producto, Ciudad, Parametros
 
 from bases.views import SinPrivilegios
 
@@ -25,10 +25,78 @@ from bases.views import SinPrivilegios
 from django.contrib.auth.models import User
 
 from ecommerce.Carrito import Carrito
-from .forms  import CategoriaForm, SubCategoriaForm, MarcaForm, ColorForm, ProductoForm,CiudadForm
+from .forms  import CategoriaForm, SubCategoriaForm, MarcaForm, ColorForm, ProductoForm,CiudadForm, ParametrosForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
+
+
+# inicio parametrizacion 
+
+class ParametroView(SinPrivilegios, generic.ListView):
+    permission_required = 'parametros.view_inplace'
+    model = Parametros
+    template_name = 'parametros/parametro_list.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+
+class ParametroNew(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+    model = Parametros
+    template_name = 'parametros/parametro_form.html'
+    context_object_name = 'obj'
+    form_class = ParametrosForm
+    success_url = reverse_lazy('ecommerce:parametro_list')
+    login_url = 'bases:login'
+    success_message = "Creado satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.user_created = self.request.user
+
+        return super().form_valid(form)
+
+
+class ParametroEdit(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+    model = Parametros
+    template_name = 'parametros/parametro_form.html'
+    context_object_name = 'obj' 
+    form_class = ParametrosForm
+    success_url = reverse_lazy('ecommerce:parametro_list')
+    login_url = 'bases:login'
+    success_message = "Actializado satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.user_updated = self.request.user.id
+
+        return super().form_valid(form)
+
+
+def parametro_disabled(request, id):
+
+    
+
+    template_name = 'parametros/parametro_disabled.html'
+    contexto = {}
+    obj = Parametros.objects.filter(pk=id).first()
+
+    if not obj:
+        return HttpResponse('Registro no existe' + str(id))
+
+    if request.method == 'GET':
+        contexto = {'obj': obj}
+
+    if request.method == 'POST':
+        obj.estado = False
+        obj.save()
+        # mensaje par que la vista lo muestre sin coloca en comentarios pues al momento de los esta haciendo con ajax
+        # messages.success(request, 'Se inactivo correctamente')
+
+        contexto = {'obj': 'OK'}
+        return HttpResponse('Registro inactivo')
+
+    return render(request, template_name, contexto)
+
+
+# fin parametrizacion 
 
 
 

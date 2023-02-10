@@ -6,13 +6,21 @@ from .views import  CategoriaView, CategoriaNew, CategoriaEdit, categoria_disabl
                 ProductoView, ProductoNew, ProductoEdit, producto_disabled,\
                     agregar_producto, eliminar_producto, restar_producto, limpiar_carrito,\
                         CiudadNew, CiudadView, CiudadEdit, ciudad_disabled,\
-                        guardar_compra
+                        guardar_compra,\
+                        ParametroView, ParametroNew, ParametroEdit, parametro_disabled
 
 
 
 
 urlpatterns = [
 
+
+    # rutas para administrar parametrizacion.
+
+    path('parametro/', ParametroView.as_view(), name='parametro_list'),
+    path('parametro/new', ParametroNew.as_view(), name='parametro_new'),
+    path('parametro/edit/<int:pk>', ParametroEdit.as_view(), name='parametro_edit'),
+    path('parametro/disabled/<int:id>', parametro_disabled, name='parametro_disabled'), # ajax
 
     
     

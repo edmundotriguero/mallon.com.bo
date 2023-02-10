@@ -67,31 +67,41 @@
               <li class="nav-item ">
                 <a class="nav-link cl-white" aria-current="page" href="{% url 'web:info' %}">MAYOR INFORMACION</a>
               </li>
-            
 
-              {% if request.user.is_authenticated %}
-              <li class="nav-item ">
-                <a class="nav-link cl-white" aria-current="page" href="#">{{request.user.username}}</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link  cl-white " href="#" id="navbarDropdownMenuLink" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false"  ><i class="fa-solid fa-user-tie fa-2x"></i></a>
+
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  {% if request.user.is_authenticated %}
+                  <li>
+                    <a class="dropdown-item" aria-current="page" href="#">{{request.user.username}}</a>
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item" aria-current="page" href="{% url 'bases:logout' %}">CERRAR SESION</a>
+                  </li>
+
+
+                  {% else %}
+
+                  <li>
+                    <a class="dropdown-item" aria-current="page" href="{% url 'bases:login' %}">INICIAR SESSION</a>
+                  </li>
+
+                  {% endif %}
+                </ul>
+
+
               </li>
 
-              <li class="nav-item ">
-                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:logout' %}">CERRAR SESION</a>
-              </li>
-
-
-              {% else %}
-
-              <li class="nav-item ">
-                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}">INICIAR SESSION</a>
-              </li>
-
-              {% endif %} 
-              
               {% block btn_carrito%}
 
-              
+
               <li class="nav-item ">
-                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}"><i class="fa-solid fa-cart-shopping fa-xl"></i></a>
+                <a class="nav-link cl-white" aria-current="page" href="{% url 'bases:login' %}"><i
+                    class="fa-solid fa-cart-shopping fa-2x"></i></a>
               </li>
 
 

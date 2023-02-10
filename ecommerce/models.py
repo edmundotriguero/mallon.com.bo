@@ -73,3 +73,16 @@ class Ciudad (ClaseModelo):
     nombre = models.CharField(max_length=100, null=False, blank=False)
     def __str__(self):
         return '{}'.format(self.nombre)
+
+
+
+class Parametros(ClaseModelo):
+    pcorr1 = models.IntegerField(blank=False, null=False)
+    pcorr2 = models.IntegerField(blank=False, null=False)
+    pnum1 = models.IntegerField(blank=True, null=True)
+    pnum2 = models.IntegerField(blank=True, null=True)
+    pdesc = models.CharField(max_length=1000, null=True, blank=True)
+    ptxt1 = models.CharField(max_length=1000, null=True, blank=True)
+    ptxt2 = models.CharField(max_length=1000, null=True, blank=True)
+    pclob1 = models.TextField( null=True, blank=True)
+    pclob2 = models.TextField( null=True, blank=True)

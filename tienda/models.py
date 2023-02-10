@@ -51,9 +51,10 @@ class Pedido(ClaseModelo):
     total_pedido = models.FloatField(blank=True, null=True)
     img_qr = models.ImageField(upload_to = 'static/img/qr')
     img_boucher = models.ImageField(upload_to = 'static/img/boucher')
-    estado_atencion =  models.BooleanField(default=True)
+    estado_atencion =  models.IntegerField(default=True)
     usuario_atencion =  models.IntegerField(blank=True, null=True)
     pedido_finalizado =  models.BooleanField(default=True)
+    cot_id = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.numPedido)

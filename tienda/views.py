@@ -28,6 +28,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, \
 from django.core.mail import send_mail
 from mallon.settings import EMAIL_HOST_USER
 
+from bases.utils import send_email_generic
 
 import os
 from django.conf import settings
@@ -38,6 +39,16 @@ from django.contrib.staticfiles import finders
 
 from ecommerce import context_processor 
 
+from django.contrib.auth.models import BaseUserManager, Group, User
+
+from bases.forms import CustomUserCreationForm
+from ecommerce.models import Parametros
+
+
+from django.contrib.auth import authenticate, login
+
+import string
+import random
 
 def tienda(request):
     template_name = 'tienda/tienda.html'
@@ -84,13 +95,44 @@ def datosClienteNew(request):
         form = DatosClienteForm(request.POST)
 
         if form.is_valid():
+
+            if not request.user.is_authenticated:
+                password = randon_password()
+                email = request.POST.get("email")
+                nombres_cliente = request.POST.get("nombres")  + " " + request.POST.get("apellidos")
+                formulario = CustomUserCreationForm(data={'username':email,'email':email,'password1':password,'password2':password})
+
+                user_new = formulario.save()
+                group = Group.objects.get(name='cliente')
+                user_new.groups.add(group)
+                user = authenticate(username=formulario.cleaned_data['username'], password=formulario.cleaned_data['password1'])
+                login(request, user)
+
+
+                #send_email_generic(request,email,"Prueba correo desde un generico","mensaje desde otra clase")
+
+                param = Parametros.objects.filter(pcorr1=10,pcorr2=2).get()
+                body_html = param.pclob1.replace("|nombre_cliente|",nombres_cliente)
+                body_html = body_html.replace("|email|",email)
+                body_html = body_html.replace("|password|",password)
+
+                send_mail(
+                    param.ptxt1,
+                    None,
+                    EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False,
+                    html_message=body_html) 
+
+
+
             
             # Guarda los datos del cliente 
             client = form.save(commit=False)
             client.user_created = request.user
             client.save()
             print(type(client))
-            print(client.pk)
+            print(client.pk) 
             print(client.email)
 
             # Guarda la cabecera del pedido
@@ -119,6 +161,7 @@ def datosClienteNew(request):
             
             carrito = Carrito(request)
             carrito.limpiar()
+
 
        
 
@@ -187,6 +230,47 @@ def cotizacionNew(request):
         form = CotizacionesForm(request.POST)
 
         if form.is_valid():
+           
+            password = randon_password()
+
+            print(password)
+            if not request.user.is_authenticated:
+            
+                email = request.POST.get("email")
+                razon_social = request.POST.get("razon_social")
+                formulario = CustomUserCreationForm(data={'username':email,'email':email,'password1':password,'password2':password})
+
+                user_new = formulario.save()
+                group = Group.objects.get(name='cliente')
+                user_new.groups.add(group)
+                user = authenticate(username=formulario.cleaned_data['username'], password=formulario.cleaned_data['password1'])
+                login(request, user)
+
+
+                #send_email_generic(request,email,"Prueba correo desde un generico","mensaje desde otra clase")
+
+                param = Parametros.objects.filter(pcorr1=10,pcorr2=1).get()
+                body_html = param.pclob1.replace("|nombre_cliente|",razon_social)
+                body_html = body_html.replace("|email|",email)
+                body_html = body_html.replace("|password|",password)
+
+                send_mail(
+                    param.ptxt1,
+                    None,
+                    EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False,
+                    html_message=body_html)
+                #send_mail.send()
+
+                # group = Group.objects.get(name='cliente')
+                # user = User('')
+                # user.set_password(password)
+                # user.groups.add(group)
+                # user.is_admin = False
+                # user.save()
+
+                
             
             total = context_processor.total_carrito(request)
            
@@ -200,14 +284,6 @@ def cotizacionNew(request):
             print(client.email)
 
             # Guarda la cabecera del pedido
-
-           
-
-            
-            
-
-            
-            # Guarda los detalles del pedido
 
             detalle = request.session.get("carrito")
 
@@ -269,7 +345,8 @@ def cotizacionNew(request):
             #     return redirect('tienda:fin_pedido') 
 
 
-
+        else :
+            return render(request, template_name, {'form':form})            
 
 
 
@@ -304,3 +381,14 @@ def cotizacion_download(request):
 
     
     return render(request, 'tienda/cotizacion_pdf.html')
+
+
+
+def randon_password():
+    number_of_strings = 5
+    length_of_string = 8
+    string_randon = ''
+    for x in range(number_of_strings):
+        string_randon = (''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length_of_string)))      
+
+    return string_randon

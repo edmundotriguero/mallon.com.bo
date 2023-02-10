@@ -87,3 +87,18 @@
     text-decoration: none;
     color: #fff;
 }
+
+
+
+.fondo-gradien {
+    height: 15em !important;
+    background: rgb(82,1,1) !important;
+background: linear-gradient(90deg, rgba(82,1,1,1) 0%, rgba(121,9,24,1) 55%, rgba(159,32,2,1) 100%) !important;
+
+}
+
+.img-marcas{
+
+    max-height: 50%;
+    width: auto;
+}
