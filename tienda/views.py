@@ -31,6 +31,7 @@ from mallon.settings import EMAIL_HOST_USER
 from bases.utils import send_email_generic
 
 import os
+import json
 from django.conf import settings
 
 from django.template.loader import get_template
@@ -45,6 +46,8 @@ from bases.forms import CustomUserCreationForm
 from ecommerce.models import Parametros
 
 
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login
 
 import string
@@ -55,11 +58,84 @@ def tienda(request):
     contexto = {}
 
     if request.method == 'GET':
-        obj = Producto.objects.filter(estado=True).all()
+        obj = Producto.objects.filter(estado=True).all().order_by('id','-orden')
+        param = Parametros.objects.filter(estado=True, pcorr1=11,pcorr2=1,pnum1=1).get()
 
-        contexto = {'obj':obj}
+
+
+        param2 = Parametros.objects.filter(pcorr1=12,pcorr2=1).get()
+
+        inicio = param2.ptxt1
+        fin = param2.ptxt2
+
+        obj = obj[int(inicio):int(fin)+1]
+
+
+
+
+        contexto = {'obj':obj,'param':param, 'inicio':inicio, 'fin':fin}
 
     return render(request, template_name, contexto)
+
+
+
+
+# para usar con ajax
+def tienda_recarga(request):
+    template_name = 'tienda/tienda.html'
+
+
+    param = Parametros.objects.filter(pcorr1=12,pcorr2=1).get()
+
+
+
+
+    cantidad = param.ptxt2
+
+    if request.is_ajax():
+
+        inicio_get = int(request.GET.get('inicio')) + int(cantidad)
+        fin_get = int(request.GET.get('fin')) + int(cantidad)
+
+
+        productos = Producto.objects.filter(estado=True).all().order_by('id','-orden')
+
+        list_data = []
+
+
+        for indice, valor in enumerate(productos[inicio_get:fin_get+1],inicio_get):
+
+            print("++=============================")
+            print(indice)
+            print(valor.id)
+            print(valor.nombre)
+            print(str(valor.img))
+
+            prod = {}
+            prod["id"] = valor.id
+            prod["nombre"] = valor.nombre
+            prod["desc"] = valor.descripcion
+            prod["precio"] = valor.precio
+            prod["img"] = str(valor.img)
+
+            list_data.append(prod)
+       
+        
+        inicio = int(inicio_get) 
+        fin = int(fin_get) 
+
+        data = {
+            'inicio': inicio,
+            'fin': fin,
+            'length':'20',
+            'objects':'ok',
+            'state':'OK',
+            'list_data':list_data
+
+        }
+
+        return HttpResponse(json.dumps(data), 'aplication/json')
+
 
 
 # class DatosClienteNew(generic.CreateView):
@@ -141,7 +217,7 @@ def datosClienteNew(request):
 
             pedido.numPedido = client.pk + 50000
             pedido.cliente = client
-            pedido.fecha_pedido = "19/08/2022"
+            pedido.fecha_pedido = datetime.now().strftime("%d/%m/%Y")
             pedido.user_created = request.user
             pedido.save()
             

@@ -1,5 +1,5 @@
-import lasante.wsgi
-SCRIPT_NAME = '/home/mallltxo/presrv2.mallon.com.bo'
+import mallon.wsgi
+SCRIPT_NAME = '/home/trigvpdy/mallon2.gaakei.com'
 
 class PassengerPathInfoFix(object):
     """

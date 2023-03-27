@@ -41,23 +41,14 @@
   <div class="container ">
    
     <h1 class="text-center p-3 fw-bold" style="color: antiquewhite;">NUESTRAS MARCAS</h1>
-    <div class="row  text-center">
+    <div class="row  text-center mx-auto">
 
      
-
+{% for stk in stick%}
       <div class="col-3  ">
-        <img class="img-marcas  " src="{% static 'web/img/marcas/marca_mallon.png' %}" alt="">
+        <img class="img-marcas  " src="{{stk.img}}" alt="">
       </div>
-      <div class="col-3  ">
-        <img class="img-marcas " src="{% static 'web/img/marcas/marca_acergal.png' %}" alt="">
-      </div>
-      <div class="col-3  ">
-
-        <img class="img-marcas " src="{% static 'web/img/marcas/marca_arequipa.png' %}" alt="">
-      </div>
-      <div class="col-3  ">
-        <img class="img-marcas " src="{% static 'web/img/marcas/marca_condor.png' %}" alt="">
-      </div>
+{% endfor %}     
 
 
 

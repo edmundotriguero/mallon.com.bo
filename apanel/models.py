@@ -12,7 +12,15 @@ from bases.models import ClaseModelo
 class Slider (ClaseModelo):
 
     nombre = models.CharField(max_length=100, null=False, blank=False)
-    img = models.ImageField(upload_to = 'rondas')
+    img = models.ImageField(upload_to = 'imgInicio')
+    descripcion = models.CharField(max_length=100, null=True, blank=True)
+    orden = models.IntegerField(blank=False, null=False)
+
+
+class Sticker (ClaseModelo):
+
+    nombre = models.CharField(max_length=100, null=False, blank=False)
+    img = models.ImageField(upload_to = 'imgInicio')
     descripcion = models.CharField(max_length=100, null=True, blank=True)
     orden = models.IntegerField(blank=False, null=False)
 

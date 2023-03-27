@@ -28,6 +28,7 @@ urlpatterns = [
     path('tienda/', include(('tienda.urls', 'tienda'), namespace='tienda')),
     path('ecommerce/', include(('ecommerce.urls', 'ecommerce'), namespace='ecommerce')),
     path('perfil/', include(('perfil.urls', 'perfil'), namespace='perfil')),
+    path('ventas/', include(('ventas.urls', 'ventas'), namespace='ventas')),
     path('admin_user/', admin.site.urls),
 
 

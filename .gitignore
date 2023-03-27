@@ -1,8 +1,12 @@
 .vscode/
+.idea/
 mallon-env/
 mallon/settings.py
 __pycache__
-cgi-bin
-public
-tmp
+.well-known
+cgi-bin/
+public/
+tmp/
 .htaccess
+passenger_wsgi.py
+mallon.zip

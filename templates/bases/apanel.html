@@ -195,6 +195,7 @@
                 <!-- <span class="badge badge-info right">6</span> -->
               </p>
             </a>
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{% url 'apanel:slider_list' %}" class="nav-link">
@@ -204,6 +205,17 @@
               </li>
              
             </ul>
+
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'apanel:sticker_list' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inicio Sticker(marca)</p>
+                </a>
+              </li>
+             
+            </ul>
+
           </li>
 
 
@@ -283,7 +295,28 @@
              
             </ul>
           </li>
-        
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fa-solid fa-dumpster"></i>
+              <p>
+                VENTAS
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'ventas:pedidos_list' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pedidos</p>
+                </a>
+              </li>
+             
+            </ul>
+
+          </li>
          
           <li class="nav-header">EXAMPLES</li>
 
@@ -298,10 +331,6 @@
 
  {% block page_content_base%}
   
-
-  
-
-    
 
     {% endblock %}
 

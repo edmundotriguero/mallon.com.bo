@@ -1,11 +1,13 @@
 from django.urls import path
-from tienda.views import tienda, datosClienteNew, finPedido, producto_view, cotizacion_download, cotizacionNew
+from tienda.views import tienda, datosClienteNew, finPedido, producto_view, cotizacion_download, cotizacionNew, tienda_recarga
 
 
 urlpatterns = [
 
 
     path('', tienda, name='tienda'),
+
+    path('tienda/loader', tienda_recarga),
     #path('nosotros', nosotros, name='nosotros'),
     path('cliente/new', datosClienteNew, name='cliente_new'),
     #path('info', info, name='info'),

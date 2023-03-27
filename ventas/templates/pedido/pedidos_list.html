@@ -1,0 +1,179 @@
+{% extends 'bases/apanel.html' %}
+
+{% load static %}
+
+{% block page_content_base %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper ">
+    <!-- Content Header (Page header) -->
+    <div class="content-header row">
+       
+        <div class="card col-8 m-2">
+            <div class="card-header">
+                <h3 class="card-title">Listado de Pedidos </h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                        title="Collapse">
+                        <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
+                        title="Remove">
+                        <i class="fas fa-times"></i></button>
+                </div>
+                <div class="card-tools ml-2 mr-2 ">
+
+                    <a href="{% url 'ecommerce:producto_new' %}" class="btn btn-success btn-sm"> Nuevo <i
+                            class="fas fa-plus-circle fa-lg"></i></a>
+
+                </div>
+            </div>
+            <div class="card-body">
+
+                {% if not obj %}
+                <div class="alert alert-info">No hay registros que mostrar</div>
+                {% else %}
+                <div class="table-responsive-sm">
+
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Num Pedido</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Fecha Pedido</th>
+                                <th scope="col">total pedido</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Estado comprobante</th>
+                                <th scope="col">Ejecutivo</th>
+
+                               
+                                <th class="all">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in obj %}
+                            <tr>
+                                <td>{{ item.numPedido }}</th>
+                                <td>{{ item.cliente.nombres }} {{ item.cliente.apellidos }}</td>
+                                <td>{{ item.fecha_pedido }}</td>
+                                <td>{{ item.total_pedido}}</td>
+
+                                <td>{{ item.estado_atencion }}</td>
+                                <td>{{ item.estado_atencion }}</td>
+                                <td>{{ item.usuario_atencion }}</td>
+                               
+
+                                
+                                <td>
+                                    <a href=""
+                                    class="btn btn-sm btn-outline-info btn-circle" role="button"><i
+                                        class="far fa-edit"></i> VER </a>  
+                                     <a href=""
+                              class="btn btn-sm btn-outline-warning btn-circle" role="button"><i
+                                  class="far fa-edit"></i> Atender </a>  
+                                  <a href=""
+                                  class="btn btn-sm btn-outline-success btn-circle" role="button"><i
+                                      class="far fa-edit"></i> Detalle </a>
+                                    <!-- <a href="{% url 'ecommerce:producto_edit' item.id %}"
+                              class="btn btn-sm btn-outline-warning btn-circle" role="button"><i
+                                  class="far fa-edit"></i></a>   -->
+
+                                    <!-- <button class="btn btn-sm btn-outline-danger btn-circle"
+                              onclick="return abrir_modal('{% url 'ecommerce:producto_disabled' item.id %}')"><i
+                                  class="far fa-trash-alt"></i></button>  -->
+                                </td>
+                            </tr>
+                            {% endfor%}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {% endif %}
+
+            </div>
+            <!-- /.card-body -->
+            <!-- <div class="card-footer">
+          Footer
+      </div> -->
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+
+        <div class="card col-3 m-2">
+            <div class="card-header">
+                <h3 class="card-title">DETALLE</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                        title="Collapse">
+                        <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
+                        title="Remove">
+                        <i class="fas fa-times"></i></button>
+                </div>
+                <!-- <div class="card-tools ml-2 mr-2 ">
+
+                    <a href="{% url 'ecommerce:producto_new' %}" class="btn btn-success btn-sm"> Nuevo <i
+                            class="fas fa-plus-circle fa-lg"></i></a>
+
+                </div> -->
+            </div>
+            <div class="card-body">
+
+                {% if not obj %}
+                <div class="alert alert-info">No hay registros que mostrar</div>
+                {% else %}
+                <div class="table-responsive-sm">
+
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">DETALLE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in obj %}
+                            <tr>
+                                <td>{{ item.nombre }}</th>
+                              
+                                <td>
+                                    <!-- <a href="{% url 'ecommerce:producto_edit' item.id %}"
+                              class="btn btn-sm btn-outline-warning btn-circle" role="button"><i
+                                  class="far fa-edit"></i></a>   -->
+                                    <!-- <button class="btn btn-sm btn-outline-danger btn-circle"
+                              onclick="return abrir_modal('{% url 'ecommerce:producto_disabled' item.id %}')"><i
+                                  class="far fa-trash-alt"></i></button>  -->
+                                </td>
+                            </tr>
+                            {% endfor%}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {% endif %}
+
+            </div>
+            <!-- /.card-body -->
+            <!-- <div class="card-footer">
+          Footer
+      </div> -->
+            <!-- /.card-footer-->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js_page %}
+
+<script>
+
+    $(document).ready(function () {
+        $('#data-table').DataTable();
+    });
+</script>
+{% endblock %}

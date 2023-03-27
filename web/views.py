@@ -2,7 +2,7 @@ from multiprocessing import context
 from urllib import request
 from django.shortcuts import render
 
-from apanel.models import Slider
+from apanel.models import Slider, Sticker
 
 # Create your views here.
 
@@ -14,7 +14,10 @@ def inicio(request):
     if request.method == 'GET':
         obj = Slider.objects.filter(estado=True).all().order_by('orden')
 
-        contexto = {'obj':obj}
+
+        stick = Sticker.objects.filter(estado=True).all().order_by('orden')
+
+        contexto = {'obj':obj,'stick':stick}
 
     return render(request, template_name, contexto)
 

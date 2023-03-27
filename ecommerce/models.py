@@ -61,6 +61,7 @@ class Producto(ClaseModelo):
     col = models.CharField(max_length=100, null=True, blank=True)
     flag_unidadmedida = models.BooleanField(blank=False, null=False)
     unidad_medida = models.CharField(max_length=100, null=True, blank=True)
+    orden = models.IntegerField(blank=True, null=True)
 
 
 class Carro(ClaseModelo):

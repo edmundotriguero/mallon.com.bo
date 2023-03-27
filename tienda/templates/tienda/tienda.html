@@ -14,8 +14,7 @@
 {% block page_content %}
 
 
-<a class="btn-whatsapp" href="https://wa.me/59173609014?text=Me%20interesa%20Mallon.com.bo" target="_blank"> <i
-    class="fa-brands fa-whatsapp"></i> </a>
+
 
 <div class=" row container-fluid">
   <div class="py-2">
@@ -85,7 +84,7 @@
 
 
   <!-- <div class="d-flex justify-content-center align-items-center"> -->
-  <div class=" row row-cols-1 row-cols-md-3 g-4  align-items-center">
+  <div class=" row row-cols-1 row-cols-md-3 g-4  align-items-center" id="productos">
 
 
 
@@ -105,24 +104,56 @@
         </div>
 
         <p>{{item.descripcion}}</p>
+
+
+        {% if item.flag_precio %}
         <p class="fw-bold text-end">{{item.precio}} Bs.</p>
 
-        <div class="text-end m-2" style="font-size: .7em;">
+        {% else %}
+
+        <p class="fw-bold text-end"> {{item.p_inicial}} Bs - {{item.p_final}} Bs</p>
+
+        {% endif %}
+
+
+        <div class="text-end m-2" style="font-size: .8em;">
           <a href="{% url 'tienda:producto_id' item.pk %}">Ver producto</a>
         </div>
 
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
           <!-- <button type="button" class="btn btn-warning">Comprar</button> -->
+          {% if item.flag_precio %}
           <button type="button" class="btn btn-success">Cotizar</button>
+
           <a href="{% url 'ecommerce:Add' item.id %}" class="btn btn-warning">Comprar</a>
+
+          {% else  %}
+
+          <button type="button" class="btn btn-success">Info. Ventas</button>
+
+
+          {%  endif %}
+
+
+
+          <a href="{{param.ptxt2}}{% url 'tienda:producto_id' item.pk %}" class="btn btn-outline-success"><i
+            class="fa-brands fa-whatsapp"></i> Chat</a>
+
         </div>
       </div>
     </div>
 
+    
+
     {% endfor%}
 
+
+
+
   </div>
+
+
 </div>
 <!-- fin de tienda  -->
 
@@ -138,107 +169,183 @@
 </div>
 
 
-<!-- Panel derecho CArrito  -->
-<div {% if request.session.carrito.items %} class="offcanvas offcanvas-end show" {% else %}
-  class="offcanvas offcanvas-end " {% endif %} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title text-center" id="offcanvasRightLabel">CARRITO DE COMPRA</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body d-flex flex-column ">
-    <div class="">
-      <form method="POST" enctype="multipart/form-data"></form>
-      {% csrf_token %}
-      <div class="d-flex align-items-start">
-
-        <table class="table table-striped table-borderless">
-          <thead>
-
-            <tr>
-              <!-- <th></th> -->
-              <th scope="col">NOMBRE</th>
-              <th scope="col">PRECIO</th>
-              <th scope="col">CANTIDAD</th>
-              <th scope="col">U.M.</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% if request.session.carrito.items %}
-            {% for key, value in request.session.carrito.items %}
-            <tr>
-              <!-- <td><input name="a_id[]" type="text" class="form-control form-control-sm" value="{{value.producto_id}}"
-                  readonly="false"></td> -->
-              <td>{{value.nombre}}</td>
-              <td>{{value.precio}}</td>
-              <td> <input name="a_cantidad[]" type="text" class="form-control form-control-sm"
-                  value="{{value.cantidad}}" readonly="false"> </td>
-                  <td>
-                    {{value.unidad_medida}}
-                  </td>
-              <td>
-
-                <a href="{% url 'ecommerce:Add' value.producto_id %}" class="badge btn btn-dark badge-dark"><i
-                    class="fas fa-plus"></i></a>
-                <a href="{% url 'ecommerce:Sub' value.producto_id %}" class="badge btn btn-dark badge-dark"><i
-                    class="fas fa-minus"></i></a>
-              </td>
-
-
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-              <td colspan="3">
-                <div class="alert alert-danger text-center"> Sin Productos </div>
-              </td>
-            </tr>
-            {% endif %}
-
-          </tbody>
-        </table>
-
-
-      </div>
-
-
-      <div class=" row container-fluid align-self-center">
-        <div class="py-5">
-
-        </div>
-      </div>
-
-
-      <div class=" d-flex align-items-end  flex-column ">
-        <div>
-
-          <th scope="row">Total:</th>
-          <td colspan="2"> {{total_carrito}} Bs.</td>
-
-        </div>
-
-        <div class="btn-toolbar mt-2" role="toolbar">
-
-
-          <a href="{% url 'tienda:cotizacion_new'  %}" class="btn btn-outline-primary me-md-2">Cotizar PDF.</a>
-
-          <a href="{% url 'ecommerce:CLS' %}" class="btn btn-outline-danger me-md-2">Limpiar</a>
-          <a href="{% url 'tienda:cliente_new' %}" class="btn btn-outline-success me-md-2">Guardar</a>
-          <!-- <button class="btn btn-success" type="submit">Guardar</button> -->
 
 
 
-        </div>
+<input type="hidden" name="inicio" id="inicio" value="{{inicio}}">
+<input type="hidden" name="fin" id="fin" value="{{fin}}">
 
 
-      </div>
-      </form>
-    </div>
 
-    <!-- fin carrito -->
-  </div>
-</div>
+{% endblock %}
 
+{% block js_page %}
+
+<script src="{% static 'base/js/jquery.min.js'%}"></script>
+
+<script>
+
+$(window).scroll(function() {
+
+  alturaTotalDocumento = $(document).height();
+  alturaScroll = $(this).scrollTop();
+  alturaViewPort = $(this).height();
+
+  if (alturaTotalDocumento == (alturaScroll + alturaViewPort)){
+
+    console.log("Se carga de nuevo");
+    cargar_ventas();
+
+  }
+
+
+});
+
+
+
+function cargar_ventas(id) {
+
+
+
+//       $("#productos").append( '   <div class="col " data-aos="zoom-in-down">' +
+//  '     <div class="card p-3 mx-1 hover-prod">' +
+//  '       <div class="card-img-top">' +
+//  '         <img src="{% static  "img/productos/producto_preba.jpg" %}" width="100%">' +
+//  '       </div>' +
+//  '       <div class="d-flex justify-content-between align-items-center ">' +
+//  '         <div class="mt-2">' +
+//  '           <h4 class="text-uppercase">Nombre de producto</h4>' +
+//  '         </div>' +
+//  '       </div>' +
+//  '       <p>{{item.descripcion}}</p>' +
+//  '       <p class="fw-bold text-end">1000 Bs.</p>' +
+//  '       <div class="text-end m-2" style="font-size: .7em;">' +
+//  '         <a href="{% url "tienda:producto_id" 1 %}">Ver producto</a>' +
+//  '       </div>' +
+//  '       <div class="btn-group" role="group" aria-label="Basic mixed styles example">' +
+//  '         <!-- <button type="button" class="btn btn-warning">Comprar</button> -->' +
+//  '         <button type="button" class="btn btn-success">Cotizar</button>' +
+//  '         <a href="{% url "ecommerce:Add" 1 %}" class="btn btn-warning">Comprar</a>' +
+//  '         <a href="{{param.ptxt2}}{% url "tienda:producto_id" 1 %}" class="btn btn-info">Comprar</a>' +
+//  '       </div>' +
+//  '     </div>' +
+//  '   </div>' );
+
+
+     var et_prod =  '   <div class="col " data-aos="zoom-in-down">' +
+ '     <div class="card p-3 mx-1 hover-prod">' +
+ '       <div class="card-img-top">' +
+ '         <img src="/|img|" width="100%">' +
+ '       </div>' +
+ '       <div class="d-flex justify-content-between align-items-center ">' +
+ '         <div class="mt-2">' +
+ '           <h4 class="text-uppercase">|nombre_prod|</h4>' +
+ '         </div>' +
+ '       </div>' +
+ '       <p>|desc|</p>' +
+ '       <p class="fw-bold text-end">|precio| Bs.</p>' +
+ '       <div class="text-end m-2" style="font-size: .7em;">' +
+ '         <a href="/tienda/producto/|id|/">Ver producto</a>' +
+ '       </div>' +
+ '       <div class="btn-group" role="group" aria-label="Basic mixed styles example">' +
+ '         <!-- <button type="button" class="btn btn-warning">Comprar</button> -->' +
+ '         <button type="button" class="btn btn-success">Cotizar</button>' +
+ '         <a href="{% url "ecommerce:Add" 1 %}" class="btn btn-warning">Comprar</a>' +
+ '         <a href="{{param.ptxt2}}/tienda/producto/|id|/" class="btn btn-info">Comprar</a>' +
+ '       </div>' +
+ '     </div>' +
+ '   </div>' ;
+
+
+        // $("#carga").show()
+
+        console.log($("#inicio").val())
+
+        var data = {
+            inicio: $("#inicio").val(),
+            fin:$("#fin").val()
+
+        };
+        // data = JSON.stringify(data);
+        var token = '{{csrf_token}}';
+        // alert(token);
+        // alert(id);
+        console.log(data);
+
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type: "GET",
+            url: "/tienda/tienda/loader",
+            data: data,
+            success: function (response) {
+                $("#carga").hide()
+                $("#no_info").hide()
+                $("#info").show()
+
+                if (response['state']=='OK'){
+                  
+                  
+                  
+                  console.log(response);
+                  $("#inicio").val(response['inicio']);
+                  $("#fin").val(response['fin']);
+
+
+                  for(var i in response['list_data']){
+                      console.log(i)
+                      console.log(response['list_data'][i]['img'])
+
+                      et_prod = et_prod.replace('|nombre_prod|',response['list_data'][i]['nombre']);
+                      et_prod = et_prod.replace('|img|',response['list_data'][i]['img']);
+                      et_prod = et_prod.replace('|precio|',response['list_data'][i]['precio']);
+                      et_prod = et_prod.replace('|id|',response['list_data'][i]['id']);
+                      et_prod = et_prod.replace('|id|',response['list_data'][i]['id']);
+                      et_prod = et_prod.replace('|desc|',response['list_data'][i]['desc']);
+                      $("#productos").append( et_prod);
+
+                      aux = '';
+
+
+
+                  }
+
+
+                }
+
+                // aux["order"][0].category
+
+                // if (response['status'] == 'OK') {
+                //     console.log(response['obj'])
+                //     $("#paciente").text(response['obj']['paciente'])
+                //     $("#edad").text(response['obj']['edad'] + " Años")
+                //     $("#medico").text(response['obj']['medico'])
+                //     $("#ultima_session").text(response['obj']['ultima_session'])
+                //     $("#tiempo_pasado").text(response['obj']['tiempo_dif'])
+                //     $("#proxima_session").text(response['obj']['proxima_session'] + '  ' + response['obj']['hora_proxima'] )
+                //     // $("#proxima_hora").text()
+
+                //     $("#especialidad").text(response['obj']['categoria'])
+                //     $("#visitas").text(response['obj']['visitas'])
+
+
+
+
+                // }
+
+                //  aux = response;
+                //  console.log(aux);
+            },
+            error: function (jqXHR, textStatus, errorThrow) {
+                console.log(textStatus, errorThrow);
+                mensaje(errorThrow, 'red');
+                cerrar_modal();
+            }
+        });
+
+    }
+
+
+</script>
 
 
 {% endblock %}

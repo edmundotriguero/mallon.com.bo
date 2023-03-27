@@ -25,7 +25,7 @@
 
     <div class="card">
       <div class="card-header">
-          <h3 class="card-title">Listado de Productos </h3>
+          <h3 class="card-title">Listado de sticker (marca) de la pagina de inicio</h3>
          
           <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
@@ -37,7 +37,7 @@
           </div>
           <div class="card-tools ml-2 mr-2 ">
              
-              <a href="{% url 'ecommerce:producto_new' %}" class="btn btn-success btn-sm" > Nuevo <i class="fas fa-plus-circle fa-lg"></i></a> 
+              <a href="{% url 'apanel:sticker_new' %}" class="btn btn-success btn-sm" > Nuevo <i class="fas fa-plus-circle fa-lg"></i></a> 
                   
           </div>
       </div>
@@ -51,16 +51,9 @@
               <table class="table table-sm table-bordered table-hover">
                   <thead>
                       <tr>
-                          <th scope="col">Orden</th>
                           <th scope="col">Nombre</th>
                           <th scope="col">Descripción</th>
-                          <th scope="col">Precio</th>
-                          <th scope="col">Rango</th>
-                          <th scope="col">Categoria</th>
-                          <th scope="col">Sub Categoria</th>
-                          <th scope="col">Marca</th>
-                          <th scope="col">Colores</th>
-
+                          <th scope="col">Orden</th>
                           <th scope="col">Estado</th>
                           <th class="all">Acciones</th>
                       </tr>
@@ -68,25 +61,17 @@
                   <tbody>
                       {% for item in obj %}
                       <tr>
-                        <td>{{ item.orden }}</th>
                           <td>{{ item.nombre }}</th>
                           <td>{{ item.descripcion }}</td>
-                         <td>{{ item.precio }}</td>
-                         <td>{{ item.p_inicial }} - {{ item.p_final }}</td>
-                        
-                         <td>{{ item.categoria.nombre }}</td>
-                         <td>{{ item.sub_cat }}</td>
-                         <td>{{ item.brand }}</td>
-                         <td>{{ item.col }}</td>
-                        
-
+                          <td>{{ item.orden }}</td>
+                         
                           <td>{{ item.estado }}</td>
                           <td>
-                            <a href="{% url 'ecommerce:producto_edit' item.id %}"
+                            <a href="{% url 'apanel:sticker_edit' item.id %}"
                               class="btn btn-sm btn-outline-warning btn-circle" role="button"><i
                                   class="far fa-edit"></i></a>  
                           <button class="btn btn-sm btn-outline-danger btn-circle"
-                              onclick="return abrir_modal('{% url 'ecommerce:producto_disabled' item.id %}')"><i
+                              onclick="return abrir_modal('{% url 'apanel:sticker_disabled' item.id %}')"><i
                                   class="far fa-trash-alt"></i></button> 
                           </td>
                       </tr>
