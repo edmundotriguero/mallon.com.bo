@@ -29,6 +29,7 @@
 }
 
 .fondo2{
-  position: absolute !important;
+  /* position: relative !important; */
   margin-top: 15%;
+  width: auto;
 }
