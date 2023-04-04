@@ -62,6 +62,15 @@ class Producto(ClaseModelo):
     flag_unidadmedida = models.BooleanField(blank=False, null=False)
     unidad_medida = models.CharField(max_length=100, null=True, blank=True)
     orden = models.IntegerField(blank=True, null=True)
+    flag_galeria =  models.BooleanField(blank=False, null=False)
+
+
+class Galeria(ClaseModelo):
+
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100, null=False, blank=False)
+    orden = models.IntegerField(blank=True, null=True)
+    img = models.ImageField(upload_to = 'static/img/productos')
 
 
 class Carro(ClaseModelo):

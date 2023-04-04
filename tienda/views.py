@@ -11,7 +11,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from ecommerce.Carrito import Carrito
 
-from ecommerce.models import Color, Producto
+from ecommerce.models import Color, Producto, Galeria
 from .forms import DatosClienteForm, CotizacionesForm
 
 from .models import DatosCliente, DetallePedido, Pedido, Cotizaciones, Cotizacion_det
@@ -58,7 +58,7 @@ def tienda(request):
     contexto = {}
 
     if request.method == 'GET':
-        obj = Producto.objects.filter(estado=True).all().order_by('id','-orden')
+        obj = Producto.objects.filter(estado=True).all().order_by('-orden')
         param = Parametros.objects.filter(estado=True, pcorr1=11,pcorr2=1,pnum1=1).get()
 
 
@@ -68,7 +68,7 @@ def tienda(request):
         inicio = param2.ptxt1
         fin = param2.ptxt2
 
-        obj = obj[int(inicio):int(fin)+1]
+        obj = obj[int(inicio)-1:int(fin)]
 
 
 
@@ -92,24 +92,30 @@ def tienda_recarga(request):
 
     cantidad = param.ptxt2
 
+
+    print(cantidad)
+
     if request.is_ajax():
 
         inicio_get = int(request.GET.get('inicio')) + int(cantidad)
         fin_get = int(request.GET.get('fin')) + int(cantidad)
 
+        # print(inicio_get)
+        # print(fin_get)
 
-        productos = Producto.objects.filter(estado=True).all().order_by('id','-orden')
+
+        productos = Producto.objects.filter(estado=True).all().order_by('-orden')
 
         list_data = []
 
 
-        for indice, valor in enumerate(productos[inicio_get:fin_get+1],inicio_get):
+        for indice, valor in enumerate(productos[inicio_get:fin_get+1]):
 
-            print("++=============================")
-            print(indice)
-            print(valor.id)
-            print(valor.nombre)
-            print(str(valor.img))
+            # print("++=============================")
+            # print(indice)
+            # print(valor.id)
+            # print(valor.nombre)
+            # print(str(valor.img))
 
             prod = {}
             prod["id"] = valor.id
@@ -122,7 +128,7 @@ def tienda_recarga(request):
        
         
         inicio = int(inicio_get) 
-        fin = int(fin_get) 
+        fin = int(fin_get)  
 
         data = {
             'inicio': inicio,
@@ -273,6 +279,11 @@ def producto_view( request, pk):
     prod = Producto.objects.get(pk=pk)
 
     obj_col = []
+    obj_galeria = []
+
+    if prod.flag_galeria:
+        obj_galeria = Galeria.objects.filter(producto=prod.id,estado=True).all().order_by('orden')
+
 
     if prod.flag_color :
         colores = prod.col.split(',')
@@ -289,7 +300,7 @@ def producto_view( request, pk):
 
    # print(prod)
 
-    obj = {'prod':prod, 'colores':obj_col}
+    obj = {'prod':prod, 'colores':obj_col, 'galeria':obj_galeria}
 
 
     return render(request, template_name, obj)

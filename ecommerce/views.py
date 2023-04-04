@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, \
     PermissionRequiredMixin
 from django.http import HttpResponse
-from ecommerce.models import Categoria,SubCategoria,Marca,Color,Producto, Ciudad, Parametros
+from ecommerce.models import Categoria,SubCategoria,Marca,Color,Producto, Ciudad, Parametros, Galeria
 
 from bases.views import SinPrivilegios
 
@@ -25,7 +25,7 @@ from bases.views import SinPrivilegios
 from django.contrib.auth.models import User
 
 from ecommerce.Carrito import Carrito
-from .forms  import CategoriaForm, SubCategoriaForm, MarcaForm, ColorForm, ProductoForm,CiudadForm, ParametrosForm
+from .forms  import CategoriaForm, SubCategoriaForm, MarcaForm, ColorForm, ProductoForm,CiudadForm, ParametrosForm, GaleriaForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
@@ -425,6 +425,84 @@ def producto_disabled(request, id):
         return HttpResponse('Registro inactivo')
 
     return render(request, template_name, contexto)
+
+
+
+
+# permite ver la lista de productos de un determinado grupo de categoria.
+def galeria_view( request, pk):
+    template_name = 'galeria/galeria_list.html'
+
+    prod = Producto.objects.filter(id=pk).get()
+
+    obj = Galeria.objects.filter(producto=pk, estado=True).all()
+
+
+   # print(prod.col.split())    
+
+   # print(prod)
+
+    obj = {'prod':prod,'obj':obj}
+
+
+    return render(request, template_name, obj)
+
+
+class GaleriaNew(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+    model = Galeria
+    template_name = 'galeria/galeria_form.html'
+    context_object_name = 'obj'
+    form_class = GaleriaForm
+    #success_url = reverse_lazy('ecommerce:galeria_list')
+    login_url = 'bases:login'
+    success_message = "Creado satisfactoriamente"
+
+    def get_context_data(self, **kwargs):
+        id_prod = self.kwargs['id']
+        
+        
+        context = super().get_context_data(**kwargs)
+        context['prod'] = Producto.objects.get(pk=id_prod, estado=True)
+        return context
+
+    def get_success_url(self) :
+        return reverse_lazy('ecommerce:galeria_list',kwargs={'pk':self.kwargs['id']})
+
+    def form_valid(self, form):
+        form.instance.user_created = self.request.user
+
+        return super().form_valid(form)
+
+
+
+
+
+def galeria_disabled(request, id):
+
+    
+
+    template_name = 'galeria/galeria_disabled.html'
+    contexto = {}
+    obj = Galeria.objects.filter(pk=id).first()
+
+    if not obj:
+        return HttpResponse('Registro no existe' + str(id))
+
+    if request.method == 'GET':
+        contexto = {'obj': obj}
+
+    if request.method == 'POST':
+        obj.estado = False
+        obj.save()
+        # mensaje par que la vista lo muestre sin coloca en comentarios pues al momento de los esta haciendo con ajax
+        # messages.success(request, 'Se inactivo correctamente')
+
+        contexto = {'obj': 'OK'}
+        return HttpResponse('Registro inactivo')
+
+    return render(request, template_name, contexto)
+
+
 
 
 # vistas para adm ciudad

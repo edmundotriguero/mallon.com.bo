@@ -189,11 +189,29 @@ $(window).scroll(function() {
 
   alturaTotalDocumento = $(document).height();
   alturaScroll = $(this).scrollTop();
-  alturaViewPort = $(this).height();
+  alturaViewPort = $(this).height() ;
 
-  if (alturaTotalDocumento == (alturaScroll + alturaViewPort)){
+//   console.log("*********************************************************"  )
 
-    console.log("Se carga de nuevo");
+//   console.log("alturaTotalDocumento: " + (alturaTotalDocumento -100))
+//     console.log("alturaScroll: " + alturaScroll)
+//     console.log("alturaViewPort: " + alturaViewPort )
+
+// console.log("SUMA: " + ((alturaScroll + alturaViewPort ) ))
+
+//   console.log("*********************************************************"  )
+
+
+  if ( parseInt(alturaTotalDocumento) - 150   <= (alturaScroll + alturaViewPort) ){
+
+   //console.log("Se carga de nuevo");
+  //  console.log("============================================================="  )
+  //   console.log("alturaTotalDocumento: " + alturaTotalDocumento)
+  //   console.log("alturaScroll: " + alturaScroll)
+  //   console.log("alturaViewPort: " + alturaViewPort)
+  //  console.log("============================================================="  )
+
+
     cargar_ventas();
 
   }
@@ -257,9 +275,11 @@ function cargar_ventas(id) {
  '   </div>' ;
 
 
+ var aux_et = et_prod;
+
         // $("#carga").show()
 
-        console.log($("#inicio").val())
+        //console.log($("#inicio").val())
 
         var data = {
             inicio: $("#inicio").val(),
@@ -270,7 +290,7 @@ function cargar_ventas(id) {
         var token = '{{csrf_token}}';
         // alert(token);
         // alert(id);
-        console.log(data);
+      //  console.log(data);
 
         $.ajax({
             headers: { "X-CSRFToken": token },
@@ -286,14 +306,14 @@ function cargar_ventas(id) {
                   
                   
                   
-                  console.log(response);
+                //  console.log(response);
                   $("#inicio").val(response['inicio']);
                   $("#fin").val(response['fin']);
 
 
                   for(var i in response['list_data']){
-                      console.log(i)
-                      console.log(response['list_data'][i]['img'])
+                     // console.log(i)
+                     // console.log(response['list_data'][i]['img'])
 
                       et_prod = et_prod.replace('|nombre_prod|',response['list_data'][i]['nombre']);
                       et_prod = et_prod.replace('|img|',response['list_data'][i]['img']);
@@ -302,6 +322,8 @@ function cargar_ventas(id) {
                       et_prod = et_prod.replace('|id|',response['list_data'][i]['id']);
                       et_prod = et_prod.replace('|desc|',response['list_data'][i]['desc']);
                       $("#productos").append( et_prod);
+
+                      et_prod = aux_et;
 
                       aux = '';
 

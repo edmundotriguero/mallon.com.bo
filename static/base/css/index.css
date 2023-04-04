@@ -14,7 +14,7 @@
     font-size: 1.7vh !important;
     margin: 0.1em;
     margin-left: 1em;
-    
+
 }
 
 .cl-white:hover {
@@ -45,8 +45,19 @@
     /* Chrome 10-25, Safari 5.1-6 */
     /* background: -webkit-linear-gradient( 45deg, rgba(197, 105, 44, 0.6), rgba(247, 48, 48, 0.6) 100%); */
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient( 10deg, rgba(165, 163, 163, 0.384), rgba(177, 125, 116, 0.322) 50%);
+    background: linear-gradient(10deg, rgba(165, 163, 163, 0.384), rgba(177, 125, 116, 0.322) 50%);
 }
+
+
+.gradient-custom_footer {
+    /* fallback for old browsers */
+    background: #ffffff;
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: -webkit-linear-gradient( 45deg, rgba(197, 105, 44, 0.6), rgba(247, 48, 48, 0.6) 100%); */
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(10deg, rgba(122, 91, 84, 0.63), rgba(78, 6, 6, 0.459) 50%);
+}
+
 
 .gradient-custom2 {
     /* fallback for old browsers */
@@ -54,7 +65,7 @@
     /* Chrome 10-25, Safari 5.1-6 */
     /* background: -webkit-linear-gradient( 45deg, rgba(197, 105, 44, 0.6), rgba(247, 48, 48, 0.6) 100%); */
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient( 10deg, rgba(104, 103, 103, 0.418), rgba(105, 96, 94, 0.322) 50%);
+    background: linear-gradient(10deg, rgba(104, 103, 103, 0.418), rgba(105, 96, 94, 0.322) 50%);
 }
 
 .fondo {
@@ -92,13 +103,76 @@
 
 .fondo-gradien {
     height: 15em !important;
-    background: rgb(82,1,1) !important;
-background: linear-gradient(90deg, rgba(82,1,1,1) 0%, rgba(121,9,24,1) 55%, rgba(159,32,2,1) 100%) !important;
+    background: rgb(82, 1, 1) !important;
+    background: linear-gradient(90deg, rgba(82, 1, 1, 1) 0%, rgba(121, 9, 24, 1) 55%, rgba(159, 32, 2, 1) 100%) !important;
 
 }
 
-.img-marcas{
+.img-marcas {
 
     max-height: 50%;
     width: auto;
+}
+
+
+
+/* Para el efecto zoom */
+/* #################################################################################################### */
+.zoom {
+    display: inline-block;
+    position: relative;
+}
+
+/* magnifying glass icon */
+.zoom:after {
+    content: '';
+    display: block;
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* background:url(icon.png); */
+}
+
+.zoom img {
+    display: block;
+}
+
+.zoom img::selection {
+    background-color: transparent;
+}
+
+
+
+
+
+/* --- text del pie */
+
+
+.text_footer {
+    text-decoration: none;
+    color: #f7e1e1 !important;
+    transition: 0.1s;
+
+
+}
+
+.text_footer:hover {
+    transform: scale(1.3);
+    text-decoration: none;
+    color: #fff;
+
+
+}
+
+.li_footer {
+    transition: 0.1s;
+
+}
+
+.li_footer:hover {
+    transform: scale(1.1);
+
+    color: #fff;
 }
