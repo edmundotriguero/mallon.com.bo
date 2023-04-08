@@ -10,3 +10,6 @@ tmp/
 .htaccess
 passenger_wsgi.py
 mallon.zip
+
+mysqlclient-1.4.6-cp36-cp36m-win_amd64.whl
+reportlab-3.5.57-cp36-cp36m-win_amd64.whl

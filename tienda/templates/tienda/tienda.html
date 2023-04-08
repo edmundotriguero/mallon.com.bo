@@ -177,7 +177,28 @@
 
 
 
+
+
+
 {% endblock %}
+
+{% block footer_block %}
+  <!-- inicio pie de pagina -->
+  <footer class=" text-center text-white">
+  
+
+
+  <!-- Copyright -->
+    <div class="text-center p-3 my-0" style="background-color: #ff0000;">
+      © 2022 Copyright:
+      <a class="text-white" href="#">MALLON.COM.BO</a>
+    </div>
+    <!-- Copyright -->
+
+
+  </footer>
+
+  {% endblock %}
 
 {% block js_page %}
 
@@ -202,7 +223,9 @@ $(window).scroll(function() {
 //   console.log("*********************************************************"  )
 
 
-  if ( parseInt(alturaTotalDocumento) - 150   <= (alturaScroll + alturaViewPort) ){
+  // if ( parseInt(alturaTotalDocumento) - 150   <= (alturaScroll + alturaViewPort) ){
+
+    if ( alturaTotalDocumento == (alturaScroll + alturaViewPort) ){
 
    //console.log("Se carga de nuevo");
   //  console.log("============================================================="  )
