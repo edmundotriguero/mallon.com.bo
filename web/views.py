@@ -4,6 +4,8 @@ from django.shortcuts import render
 
 from apanel.models import Slider, Sticker
 
+from ecommerce.models import Parametros, Testimonio
+
 # Create your views here.
 
 
@@ -17,7 +19,14 @@ def inicio(request):
 
         stick = Sticker.objects.filter(estado=True).all().order_by('orden')
 
-        contexto = {'obj':obj,'stick':stick}
+        testimonios = Testimonio.objects.filter(estado=1).all().order_by("id")
+
+
+        param =  Parametros.objects.filter(estado=True, pcorr1=13,pcorr2=1,pnum1=1).get()
+
+        param_num = param.pnum2
+
+        contexto = {'obj':obj,'stick':stick,'num_marca':param_num,"testimonios":testimonios}
 
     return render(request, template_name, contexto)
 

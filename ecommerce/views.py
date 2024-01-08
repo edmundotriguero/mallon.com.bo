@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, \
     PermissionRequiredMixin
 from django.http import HttpResponse
-from ecommerce.models import Categoria,SubCategoria,Marca,Color,Producto, Ciudad, Parametros, Galeria
+from ecommerce.models import Categoria,SubCategoria,Marca,Color,Producto, Ciudad, Parametros, Galeria, Testimonio
 
 from bases.views import SinPrivilegios
 
@@ -25,7 +25,7 @@ from bases.views import SinPrivilegios
 from django.contrib.auth.models import User
 
 from ecommerce.Carrito import Carrito
-from .forms  import CategoriaForm, SubCategoriaForm, MarcaForm, ColorForm, ProductoForm,CiudadForm, ParametrosForm, GaleriaForm
+from .forms  import CategoriaForm, SubCategoriaForm, MarcaForm, ColorForm, ProductoForm,CiudadForm, ParametrosForm, GaleriaForm, TestimonioForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
@@ -573,6 +573,70 @@ def ciudad_disabled(request, id):
 
 
 # fin vistas para adm ciudad
+
+
+
+class TestimonioView(SinPrivilegios, generic.ListView):
+    permission_required = 'testimonio.view_inplace'
+    model = Testimonio
+    template_name = 'testimonio/testimonio_list.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+
+class TestimonioNew(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+    model = Categoria
+    template_name = 'testimonio/testimonio_form.html'
+    context_object_name = 'obj'
+    form_class = TestimonioForm
+    success_url = reverse_lazy('ecommerce:testimonio_list')
+    login_url = 'bases:login'
+    success_message = "Creado satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.user_created = self.request.user
+
+        return super().form_valid(form)
+
+
+class TestimonioEdit(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+    model = Categoria
+    template_name = 'testimonio/testimonio_form.html'
+    context_object_name = 'obj'
+    form_class = TestimonioForm
+    success_url = reverse_lazy('ecommerce:testimonio_list')
+    login_url = 'bases:login'
+    success_message = "Actializado satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.user_updated = self.request.user.id
+
+        return super().form_valid(form)
+
+
+def testimonio_disabled(request, id):
+
+    
+
+    template_name = 'testimonio/testimonio_disabled.html'
+    contexto = {}
+    obj = Testimonio.objects.filter(pk=id).first()
+
+    if not obj:
+        return HttpResponse('Registro no existe' + str(id))
+
+    if request.method == 'GET':
+        contexto = {'obj': obj}
+
+    if request.method == 'POST':
+        obj.estado = False
+        obj.save()
+        # mensaje par que la vista lo muestre sin coloca en comentarios pues al momento de los esta haciendo con ajax
+        # messages.success(request, 'Se inactivo correctamente')
+
+        contexto = {'obj': 'OK'}
+        return HttpResponse('Registro inactivo')
+
+    return render(request, template_name, contexto)
 
 
 

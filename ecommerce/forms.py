@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Categoria, SubCategoria, Marca, Color, Producto, Ciudad, Parametros, Galeria
+from .models import Categoria, SubCategoria, Marca, Color, Producto, Ciudad, Parametros, Galeria, Testimonio
 
 
 
@@ -107,6 +107,19 @@ class CiudadForm(forms.ModelForm):
         fields = ['nombre', 'estado']
 
         #widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+
+class TestimonioForm(forms.ModelForm):
+    class Meta:
+        model = Testimonio
+        fields = ['persona_testimonio', 'descripcion', 'estado']
+
+        widget = {'descripcion': forms.TextInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

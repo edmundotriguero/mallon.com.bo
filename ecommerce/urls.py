@@ -8,7 +8,8 @@ from .views import  CategoriaView, CategoriaNew, CategoriaEdit, categoria_disabl
                         CiudadNew, CiudadView, CiudadEdit, ciudad_disabled,\
                         guardar_compra,\
                         ParametroView, ParametroNew, ParametroEdit, parametro_disabled,\
-                        galeria_view, GaleriaNew, galeria_disabled
+                        galeria_view, GaleriaNew, galeria_disabled,\
+                        TestimonioView, TestimonioNew, TestimonioEdit, testimonio_disabled
 
 
 
@@ -85,6 +86,15 @@ urlpatterns = [
     path('eliminar/<int:producto_id>/', eliminar_producto, name="Del"),
     path('restar/<int:producto_id>/', restar_producto, name="Sub"),
     path('limpiar/', limpiar_carrito, name="CLS"),
+
+
+# rutas para administrar testimonios.
+
+    path('testimonio/', TestimonioView.as_view(), name='testimonio_list'),
+    path('testimonio/new', TestimonioNew.as_view(), name='testimonio_new'),
+    path('testimonio/edit/<int:pk>', TestimonioEdit.as_view(), name='testimonio_edit'),
+    path('testimonio/disabled/<int:id>', testimonio_disabled, name='testimonio_disabled'), # ajax
+
 
 # rutas para guardar compra
 
