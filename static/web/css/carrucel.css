@@ -1,70 +1,42 @@
-.body-pcarrucel {
-    align-items: center;
-    /* background: #E3E3E3; */
-    /* display: flex; */
-    /* height: 100vh; */
-    justify-content: center;
-}
-
-/* @mixin white-gradient {
-    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-}
-
-$animationSpeed: 40s; */
-
-
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(calc(-250px * 2))
-    }
-}
-
-
-
-.pslider {
-    /* background: white; */
-    /* box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125); */
-    height: 100px;
+.cont-print{
+    text-align: center;
     margin: auto;
+    display: block;
+}
+
+.cont-princ-slider {
+    height: 100px;
     overflow: hidden;
-    position: relative;
-    width: 960px;
+    width: 80%;
+    margin: auto;
+}
 
-    &::before,
-    &::after {
-        /* @include white-gradient; */
-        content: "";
-        height: 100px;
-        position: absolute;
-        width: 200px;
-        z-index: 2;
-    }
+.slier-prin {
+    display: inline-flex;
+    -moz-animation: slider 10s infinite linear;
+    -webkit-animation: slider 10s infinite linear;
+    animation: slider 10s infinite linear;
+    height: 100%;
+    width: 80%;
+}
 
-    &::after {
-        right: 0;
-        top: 0;
-        transform: rotateZ(180deg);
-    }
+.juegos_DWG {
+    background: #CCC;
+    /* border: 1px solid #FFF; */
+    color: #FFF;
+    /* font-family: Arial; */
+    /* font-size: 16px; */
+    line-height: 100px;
+    height: 100%;
+    flex: 0 0 auto;
+    text-align: center;
+    width: 250px;
+}
 
-    &::before {
-        left: 0;
-        top: 0;
-    }
-
-    .pslide-track {
-        animation: scroll 40s linear infinite;
-        display: flex;
-        width: calc(250px * 2);
-    }
-
-    .pslide {
-        height: 100px;
-        width: 250px;
-        margin-left: 10px;
-        margin-right: 10px;
+@keyframes slider {
+    to {
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
     }
 }

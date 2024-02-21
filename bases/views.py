@@ -14,6 +14,7 @@ from django.contrib.auth import authenticate, login
 
 from django.contrib.auth.models import Group
 
+from ecommerce.models import Marca 
 
 from django.contrib.auth.views import LoginView
 
@@ -22,6 +23,8 @@ from django.contrib.auth.views import LoginView
 def inicio(request):
     template_name = 'bases/index.html'
     contexto = {}
+
+    marcas = 
 
     return render(request, template_name, contexto)
 
