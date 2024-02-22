@@ -24,7 +24,7 @@ def inicio(request):
     template_name = 'bases/index.html'
     contexto = {}
 
-    marcas = 
+    
 
     return render(request, template_name, contexto)
 
